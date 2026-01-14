@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
     public int width;
     public int height;
     public int tileSize;
-    public Vector3 origin;
+    public Vector2 origin;
 
     private Tile[,] grid;
 
@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector2Int gridPos = new Vector2Int(x, y);
-                Vector3 worldPos = GridToWorld(gridPos);
+                Vector2 worldPos = GridToWorld(gridPos);
 
                 float r = Random.value; // 0.0 – 1.0
                 TileType type;
@@ -50,18 +50,20 @@ public class GridManager : MonoBehaviour
         }
         return grid[x, y];
     }
-    public Vector3 GridToWorld(Vector2Int gridPos)
+    public Vector2 GridToWorld(Vector2Int gridPos)
     {
-        return origin + new Vector3(gridPos.x*tileSize,gridPos.y*tileSize,0f);
+        return origin + new Vector2(
+            gridPos.x * tileSize + tileSize * 0.5f,
+            gridPos.y * tileSize + tileSize * 0.5f
+        );
     }
-    public Vector2Int WorldToGrid(Vector3 worldPos)
+    public Vector2Int WorldToGrid(Vector2 worldPos)
     {
-        int x = Mathf.FloorToInt(worldPos.x / tileSize);
-        int y = Mathf.FloorToInt(worldPos.y / tileSize);
-        
+        int x = Mathf.FloorToInt((worldPos.x - origin.x) / tileSize);
+        int y = Mathf.FloorToInt((worldPos.y - origin.y) / tileSize);
         return new Vector2Int(x, y);
     }
-
+    
     private void OnDrawGizmos()
     {
         if (width <= 0 || height <= 0) return;
@@ -85,10 +87,10 @@ public class GridManager : MonoBehaviour
 
                 Gizmos.DrawWireCube(
                     tile.WorldPosition,
-                    new Vector3(tileSize-0.1f, tileSize-0.1f,0f)
+                    new Vector2(tileSize-0.1f, tileSize-0.1f)
                 );
             }
         }
     }
-
+    
 }
