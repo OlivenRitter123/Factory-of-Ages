@@ -3,11 +3,33 @@ using UnityEngine;
 public class Tile
 {
     public Vector2Int GridPosition { get; private set; }
-    public Vector3 WorldPosition { get; private set; }
+    public Vector3 WorldPosition { get; private set;}
+    public TileType TileType { get; set; }
 
-    public Tile(Vector2Int gridPos, Vector3 worldPos)
+    public Tile(Vector2Int gridPos, Vector3 worldPos, TileType tileType)
     {
         GridPosition = gridPos;
         WorldPosition = worldPos;
+        TileType = tileType;
     }
-}
+    public bool isWalkable()
+    {
+        switch (TileType)
+        {
+            case TileType.Ground: return true;
+            case TileType.Blocked: return false;
+            case TileType.Empty: return false;
+            default: return false;
+        }
+    }
+    public bool isBlocked()
+    {
+        switch (TileType)
+        {
+            case TileType.Empty: return true;
+            case TileType.Ground: return false;
+            case TileType.Blocked: return true;
+            default: return false;
+        }
+    }
+}   
