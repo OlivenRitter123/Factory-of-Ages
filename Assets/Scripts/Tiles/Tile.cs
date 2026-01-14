@@ -5,6 +5,9 @@ public class Tile
     public Vector2Int GridPosition { get; private set; }
     public Vector3 WorldPosition { get; private set;}
     public TileType TileType { get; set; }
+    public bool isOccupied = false;
+    public Object building;
+    public bool isSelected = false;
 
     public Tile(Vector2Int gridPos, Vector3 worldPos, TileType tileType)
     {
@@ -31,5 +34,14 @@ public class Tile
             case TileType.Blocked: return true;
             default: return false;
         }
+    }
+    public void SetBuilding(Object building)
+    {
+            this.building = building;
+            this.isOccupied = true;
+    }
+    public Object GetBuilding()
+    {
+        return this.building;
     }
 }   

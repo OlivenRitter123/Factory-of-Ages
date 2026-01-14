@@ -1,9 +1,11 @@
+using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 
 public class GridCursor : MonoBehaviour
 {
     public GridManager gm;
-    public Transform cursorVisual;
+    public Transform cursorHover;
+    public Transform cursorClick;
 
     private void Update()
     {
@@ -13,16 +15,43 @@ public class GridCursor : MonoBehaviour
         Vector2Int gridPos = gm.WorldToGrid(mouseWorld);
         Tile tile = gm.GetTile(gridPos.x, gridPos.y);
         HoverTile(tile);
+        ClickTile(tile);
     }
     private void HoverTile(Tile tile)
     {
         
         if (tile == null || tile.TileType == TileType.Blocked || tile.TileType == TileType.Empty)
         {
-            cursorVisual.gameObject.SetActive(false);
+            cursorHover.gameObject.SetActive(false);
             return;
         }
-        cursorVisual.gameObject.SetActive(true);
-        cursorVisual.position = tile.WorldPosition;
+        if (tile.isSelected)
+        {
+            cursorHover.gameObject.SetActive(false);
+            return;
+        }
+        cursorHover.gameObject.SetActive(true);
+        cursorHover.position = tile.WorldPosition;
+    }
+    private void ClickTile(Tile tile)
+    {
+        if (Input.GetMouseButtonDown(0) && tile != null)
+        {
+            if (tile.TileType == TileType.Blocked || tile.TileType == TileType.Empty)
+            {
+                return; // nichts tun
+            }
+
+            tile.isSelected = !tile.isSelected; // toggled pro Tile
+
+            // CursorClick nur anzeigen, wenn Tile jetzt selected ist
+            cursorClick.gameObject.SetActive(tile.isSelected);
+            cursorClick.position = tile.WorldPosition;
+
+            Debug.Log("Tile Position: " + tile.GridPosition +
+                      " Occupied: " + tile.isOccupied +
+                      " Tile Type: " + tile.TileType +
+                      " Selected: " + tile.isSelected);
+        }
     }
 }
