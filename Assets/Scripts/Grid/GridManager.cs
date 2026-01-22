@@ -26,17 +26,17 @@ public class GridManager : MonoBehaviour
                 Vector2Int gridPos = new Vector2Int(x, y);
                 Vector2 worldPos = GridToWorld(gridPos);
 
-                float r = Random.value; // 0.0 – 1.0
-                TileType type;
+                //float r = Random.value; // 0.0 – 1.0
+                //TileType type;
 
-                if (r < 0.1f)
-                    type = TileType.Empty;        // 10%
-                else if (r < 0.2f)
-                    type = TileType.Blocked;      // 10%
-                else
-                    type = TileType.Ground;       // 80%
+                //if (r < 0.1f)
+                //    type = TileType.Empty;        // 10%
+                //else if (r < 0.2f)
+                //    type = TileType.Blocked;      // 10%
+                //else
+                //    type = TileType.Ground;       // 80%
 
-                grid[x, y] = new Tile(gridPos, worldPos, type);
+                grid[x, y] = new Tile(gridPos, worldPos, TileType.Ground);
             }
         }
     }
