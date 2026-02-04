@@ -7,6 +7,7 @@ public class GridCursor : MonoBehaviour
     public Transform cursorHover;
     public Transform cursorClick;
     private Camera cam;
+    private int countNumber = 0; // only for test
 
     private void Awake()
     {
@@ -52,11 +53,14 @@ public class GridCursor : MonoBehaviour
             // CursorClick nur anzeigen, wenn Tile jetzt selected ist
             cursorClick.gameObject.SetActive(tile.isSelected);
             cursorClick.position = tile.WorldPosition;
+            if (!tile.isOccupied)
+            {
+                tile.SetBuilding(new Building(BuildingType.ConveyorBelt, new Vector2Int(1, 1), null, "Test" + countNumber)); // null is a temporaty solution for a problem i dont want to fix
+                countNumber++;
+            }
+            Debug.Log(tile.building.name);
+            
 
-            Debug.Log("Tile Position: " + tile.GridPosition +
-                      " Occupied: " + tile.isOccupied +
-                      " Tile Type: " + tile.TileType +
-                      " Selected: " + tile.isSelected);
         }
     }
 }

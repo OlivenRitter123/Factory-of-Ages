@@ -37,8 +37,9 @@ public class Tile
     }
     public void SetBuilding(Building building)
     {
-            this.building = building;
-            this.isOccupied = true;
+        this.building = building;
+        this.isOccupied = true;
+        this.TileType = TileType.Blocked;
     }
     public Building GetBuilding()
     {
