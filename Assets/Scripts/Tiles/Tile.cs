@@ -6,7 +6,7 @@ public class Tile
     public Vector3 WorldPosition { get; private set;}
     public TileType TileType { get; set; }
     public bool isOccupied = false;
-    public Object building;
+    public Building building;
     public bool isSelected = false;
 
     public Tile(Vector2Int gridPos, Vector3 worldPos, TileType tileType)
@@ -35,12 +35,12 @@ public class Tile
             default: return false;
         }
     }
-    public void SetBuilding(Object building)
+    public void SetBuilding(Building building)
     {
             this.building = building;
             this.isOccupied = true;
     }
-    public Object GetBuilding()
+    public Building GetBuilding()
     {
         return this.building;
     }

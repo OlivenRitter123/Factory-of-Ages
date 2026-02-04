@@ -41,11 +41,17 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        if (width > 0 && height > 0)
+            CreateGrid();
+    }
+
+
     public Tile GetTile(int x, int y)
     {
         if(x < 0 || y < 0 || x >= width || y >= height)
         {
-            Debug.LogWarning("java.lang.TilesOutOfBoundsException");
             return null;
         }
         return grid[x, y];
@@ -67,9 +73,6 @@ public class GridManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (width <= 0 || height <= 0) return;
-
-        if (grid == null)
-            CreateGrid();
 
         for (int x = 0; x < width; x++)
         {

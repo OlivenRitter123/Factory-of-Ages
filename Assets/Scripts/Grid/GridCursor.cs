@@ -6,10 +6,15 @@ public class GridCursor : MonoBehaviour
     public GridManager gm;
     public Transform cursorHover;
     public Transform cursorClick;
+    private Camera cam;
 
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
     private void Update()
     {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
         mouseWorld.z = 0f;
 
         Vector2Int gridPos = gm.WorldToGrid(mouseWorld);
